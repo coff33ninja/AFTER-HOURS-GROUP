@@ -1,0 +1,59 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A client dossier in the system.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "User email from Firebase Auth"
+        },
+        "dossierId": {
+          "type": "string",
+          "description": "Generated dossier ID"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "active", "locked"],
+          "description": "The current status of their dossier"
+        },
+        "createdAt": {
+          "type": "object",
+          "description": "Server timestamp of creation"
+        }
+      },
+      "required": ["email", "status", "createdAt"]
+    },
+    "Associate": {
+      "title": "Associate",
+      "description": "An asset in the roster.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "focus": { "type": "string" },
+        "location": { "type": "string" },
+        "style": { "type": "string" },
+        "languages": { "type": "string" },
+        "traits": { "type": "string" },
+        "bio": { "type": "string" },
+        "quirks": { "type": "string", "description": "Discrete AI-only quirks or personality traits" }
+      },
+      "required": ["name", "focus", "location", "style", "languages", "traits", "bio", "quirks"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "Client dossiers."
+    },
+    "/associates/{associateId}": {
+      "schema": {
+        "$ref": "#/entities/Associate"
+      },
+      "description": "The roster of available assets."
+    }
+  }
+}
